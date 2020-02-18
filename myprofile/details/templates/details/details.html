@@ -15,8 +15,8 @@
     <title>Welcome</title>
 </head>
 <body>
-<!--<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">-->
-<!-- Modal -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<!--&lt;!&ndash; Modal &ndash;&gt;-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -125,13 +125,16 @@
 </div>
 <div class="text-center">
 <h3>
-Ashu Singh<span class="font-weight-light">, 22</span>
+{{ data.name}}<span class="font-weight-light">, 22</span>
 </h3>
+<div class="h5 font-weight-400">
+<i class="ni location_pin mr-2"></i>Username: {{ data.username }}
+</div>
 <div class="h5 font-weight-300">
-<i class="ni location_pin mr-2"></i>Chandigarh, India
+<i class="ni location_pin mr-2"></i>{{ data.city }}, {{ data.country }}
 </div>
 <div class="h5 mt-4">
-<i class="ni business_briefcase-24 mr-2"></i>Student
+<i class="ni business_briefcase-24 mr-2"></i>{{ data.empStatus }}
 </div>
 <div>
 <i class="ni education_hat mr-2"></i>Punjab University, Chandigarh
@@ -141,16 +144,42 @@ Ashu Singh<span class="font-weight-light">, 22</span>
     </div>
 <hr class="my-4">
     <h4>Bio</h4>
-<p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
+<p>{{ data.bio }}</p>
 <hr class="my-4">
     <h4>Order Details</h4>
+    {% if order is not None %}
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Item Name</th>
+      <th scope="col">Order ID</th>
+      <th scope="col">Tracking ID</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in order %}
+    <tr>
+      <td>{{ item.item }}</td>
+      <td>{{ item.orderID }}</td>
+      <td>{{ item.trackingID }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+
+
+{% else %}
 <p>No records to display</p>
+    {% endif %}
 <hr class="my-4">
     <h4>Card Details</h4>
+    <p></p>
 <p>You haven't added any card details yet</p>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Add New Card
 </button>
+    <a href="modal.html" data-toggle="modal" data-target="#exampleModal">Add</a>
 </div>
 </div>
 </div>
