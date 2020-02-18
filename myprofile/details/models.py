@@ -19,10 +19,11 @@ class UserDetails(models.Model):
 
 class CardDetails(models.Model):
     cardId = models.ForeignKey('UserDetails', on_delete=models.CASCADE)
-    cardNUmber = models.CharField(max_length=16)
+    cardNumber = models.CharField(max_length=16)
     month = models.CharField(max_length=2)
     year = models.CharField(max_length=4)
     cvv = models.CharField(max_length=3)
+    cardName = models.CharField(max_length=30)
 
 
 class OrderDetails(models.Model):

@@ -33,26 +33,30 @@
                         <h3 class="text-center">Debit/Credit Card</h3>
                     </div>
                     <hr>
-                    <form action="/echo" method="post" novalidate="novalidate" class="needs-validation">
 
+                    <form action="" method="post" novalidate="novalidate" class="needs-validation">
+                    {% csrf_token %}
 
                         <div class="form-group">
                             <label for="cc-number" class="control-label mb-1">Card number</label>
-                            <input id="cc-number" name="cc-number" type="tel" class="form-control cc-number identified visa" required autocomplete="off"  >
+<!--                            <input id="cc-number" name="cc-number" type="tel" class="form-control cc-number identified visa" required autocomplete="off"  >-->
+                            {{ form.cardNumber }}
                             <span class="invalid-feedback">Enter a valid 12 to 16 digit card number</span>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="cc-exp" class="control-label mb-1">Expiration</label>
-                                    <input id="cc-exp" name="cc-exp" type="tel" class="form-control cc-exp" required placeholder="MM / YY" autocomplete="cc-exp">
+                                    <label for="cc-exp" class="control-label mb-1">Expiry Month</label>
+<!--                                    <input id="cc-exp" name="cc-exp" type="tel" class="form-control cc-exp" required placeholder="MM / YY" autocomplete="cc-exp">-->
+                                    {{ form.month }}
                                     <span class="invalid-feedback">Enter the expiration date</span>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <label for="x_card_code" class="control-label mb-1">CVV</label>
+                                <label for="x_card_code" class="control-label mb-1">Expiry Year</label>
                                 <div class="input-group">
-                                    <input id="x_card_code" name="x_card_code" type="tel" class="form-control cc-cvc" required autocomplete="off">
+<!--                                    <input id="x_card_code" name="x_card_code" type="tel" class="form-control cc-cvc" required autocomplete="off">-->
+                                    {{ form.year }}
                                     <span class="invalid-feedback order-last">Enter the 3-digit code on back</span>
                                     <div class="input-group-append">
                                         <div class="input-group-text">
@@ -64,19 +68,33 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="x_zip" class="control-label mb-1">Card Holder Name</label>
-                            <input id="x_zip" name="x_zip" type="text" class="form-control" value="" data-val="true" data-val-required="Please enter the ZIP/Postal code" autocomplete="postal-code">
-                            <span class="help-block" data-valmsg-for="x_zip" data-valmsg-replace="true"></span>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="cc-exp" class="control-label mb-1">CVV</label>
+<!--                                    <input id="cc-exp" name="cc-exp" type="tel" class="form-control cc-exp" required placeholder="MM / YY" autocomplete="cc-exp">-->
+                                    {{ form.cvv }}
+                                    <span class="invalid-feedback">Enter the expiration date</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="cc-exp" class="control-label mb-1">Card Holder Name</label>
+<!--                                    <input id="cc-exp" name="cc-exp" type="tel" class="form-control cc-exp" required placeholder="MM / YY" autocomplete="cc-exp">-->
+                                    {{ form.name }}
+                                    <span class="invalid-feedback">Enter the expiration date</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" align="center">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="Save changes">
                         </div>
                     </form>
                 </div>
             </div>
       </div>
-      <div class="modal-footer" align="center">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+
     </div>
   </div>
 </div>
@@ -175,11 +193,22 @@
 <hr class="my-4">
     <h4>Card Details</h4>
     <p></p>
+    {% if card is not None %}
+    <center>
+    <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h3>{{ card.cardNumber }}</h3>
+    <h6 class="card-subtitle mb-2 text-muted">{{ card.cardName }}</h6>
+    <p class="card-text"><br>Expiry Date: Month - {{ card.month }} Year - {{ card.year }}</p>
+    <a href="#" class="card-link">Remove Card</a>
+  </div>
+</div></center>
+    {% else %}
 <p>You haven't added any card details yet</p>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Add New Card
 </button>
-    <a href="modal.html" data-toggle="modal" data-target="#exampleModal">Add</a>
+    {% endif %}
 </div>
 </div>
 </div>
