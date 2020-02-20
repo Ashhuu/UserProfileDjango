@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from . import models
 from . import forms
 from datetime import datetime
@@ -11,6 +11,7 @@ def details(request):
     data = details[0]
     orderList = []
     form = forms.CardForm()
+    upload = forms.UploadImg()
     if models.OrderDetails.objects.filter(orderKey=data).exists():
         orders = models.OrderDetails.objects.filter(orderKey=data).values()
         for i in orders:
@@ -19,12 +20,12 @@ def details(request):
     else:
         orderList = None
     if models.CardDetails.objects.filter(cardId=data).exists():
-        #card = models.CardDetails.objects.filter(cardId=data).values()
         card = models.CardDetails.objects.get(cardId=data)
     else:
         card = None
     if request.method == 'POST':
         form = forms.CardForm(request.POST)
+        upload = forms.UploadImg(request.POST)
         if form.is_valid():
             cardDetails = form.cleaned_data
             card = models.CardDetails.objects.create(cardId=user,
@@ -34,7 +35,8 @@ def details(request):
                                                      cvv=cardDetails['cvv'],
                                                      cardName=cardDetails['name'])
             card.save()
-    return render(request, 'details/details.html', {'data': data, 'order': orderList, 'form': form, 'card':card})
+
+    return render(request, 'details/details.html', {'data': data, 'order': orderList, 'form': form, 'card': card, 'form2': upload})
 
 
 def addOrder():
@@ -46,5 +48,14 @@ def addOrder():
     order = models.OrderDetails.objects.create(orderKey=b, orderId = temp, orderDate = datetime.now(), item="Product2", trackingID = "778466")
     order.save()
 
+
 def test(request):
     return render(request, 'details/test.html', {})
+
+
+def delCard(request, id):
+    if models.CardDetails.objects.filter(cardNumber=id).exists():
+        models.CardDetails.objects.get(cardNumber=id).delete()
+        return redirect('home')
+    else:
+        return redirect('home')

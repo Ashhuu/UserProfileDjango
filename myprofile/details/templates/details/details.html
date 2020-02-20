@@ -16,7 +16,28 @@
 </head>
 <body>
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-<!--&lt;!&ndash; Modal &ndash;&gt;-->
+<div class="modal fade" id="uploadImg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="uploadImgLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            {{ form2 }}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Card Details Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -119,7 +140,7 @@
 <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
 <div class="d-flex justify-content-between">
 <a href="#" class="btn btn-sm btn-info mr-4">Connect</a>
-<a href="#" class="btn btn-sm btn-default float-right">Message</a>
+<a href="#" class="btn btn-sm btn-default float-right" data-toggle="modal" data-target="#uploadImg">Upload Pic</a>
 </div>
 </div>
 <div class="card-body pt-0 pt-md-4">
@@ -200,7 +221,7 @@
     <h3>{{ card.cardNumber }}</h3>
     <h6 class="card-subtitle mb-2 text-muted">{{ card.cardName }}</h6>
     <p class="card-text"><br>Expiry Date: Month - {{ card.month }} Year - {{ card.year }}</p>
-    <a href="#" class="card-link">Remove Card</a>
+    <a href="{% url 'deleteCard' card.cardNumber %}" class="card-link">Remove Card</a>
   </div>
 </div></center>
     {% else %}

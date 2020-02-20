@@ -1,4 +1,5 @@
 from django import forms
+from . import models
 
 
 class CardForm(forms.Form):
@@ -12,3 +13,9 @@ class CardForm(forms.Form):
                           widget=forms.PasswordInput(attrs={'placeholder': 'CVV', 'class': 'form-control cc-cvc', 'id': 'x_card_code'}),
                           required=True)
     name = forms.CharField(label="Card Holder Name", widget=forms.TextInput(attrs={'placeholder': 'Card Holder Name', 'id':'cc-number', 'class':'form-control cc-number identified visa'}))
+
+
+class UploadImg(forms.ModelForm):
+    class Meta:
+        model = models.UserDetails
+        fields = ['photo']
